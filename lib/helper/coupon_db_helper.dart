@@ -25,7 +25,7 @@ class CouponDBHelper
     db = await openDatabase(path, version: 1, onCreate: (db, version) {});
 
     await db?.execute(
-        "CREATE TABLE IF NOT EXISTS $tableName ($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colCoupon TEXT,$colQuantity INTEGER,$colPrice INTEGER)");
+        "CREATE TABLE IF NOT EXISTS $tableName ($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colCoupon TEXT, $colQuantity INTEGER, $colPrice INTEGER);");
   }
 
   insertRecord() async {
@@ -36,11 +36,11 @@ class CouponDBHelper
 
     if (isInserted == false) {
       for (int i = 0; i < Global.coupon.length; i++) {
-
        Coupon data =  Coupon.data(data: Global.coupon[i]);
+        List args = [data.name,data.quantity,data.price];
+
         String query =
             "INSERT INTO $tableName($colCoupon, $colQuantity, $colPrice) VALUES(?, ?, ?)";
-        List args = [data.name,data.quantity,data.price];
 
         await db?.rawInsert(query, args);
       }
@@ -65,7 +65,7 @@ class CouponDBHelper
     await initDB();
 
     int? a = await db?.rawUpdate(
-        "Update $tableName SET $colQuantity= ? WHERE $colId = ?", [quantity, id]);
+        "Update $tableName SET $colQuantity= ? WHERE $colId = ?", [--quantity, id]);
 
     print(a);
   }

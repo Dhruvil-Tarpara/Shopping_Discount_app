@@ -149,7 +149,7 @@ class _ProductPageState extends State<ProductPage> {
                 child: ElevatedButton(
                   onPressed: () {
                     cartController.addProduct(productDB: data);
-                    Get.toNamed("/cart_page");
+                    Get.offNamed("/cart_page");
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.orange),

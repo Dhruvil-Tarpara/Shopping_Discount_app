@@ -12,6 +12,7 @@ class Global {
     Coupon(name: "SUPER1000", quantity: 8, price: 1000),
     Coupon(name: "EPIC", quantity: 6, price: 400),
     Coupon(name: "LUCKY", quantity: 10, price: 199),
+    Coupon(name: "LUCKY12", quantity: 0, price: 149),
   ];
 
   static List<Product> allProduct = [

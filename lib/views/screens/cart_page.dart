@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../controllers/getx_controllers.dart';
 
 
+
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
 
@@ -22,6 +23,7 @@ class _CartPageState extends State<CartPage> {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blueGrey,
         title: Text(
           "Cart",
           style: GoogleFonts.poppins(
@@ -124,7 +126,7 @@ class _CartPageState extends State<CartPage> {
                             cartController.removeProduct(
                                 productDB: cartController.addedProduct[i],quantity: cartController.productQuantity[i]);
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             CupertinoIcons.delete_simple,
                             color: Colors.grey,
                           ),
@@ -154,13 +156,19 @@ class _CartPageState extends State<CartPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "Promo Code",
-                      style: GoogleFonts.poppins(
-                        fontSize: 12,
-                        color: Colors.black,
+                    Obx(
+                    ()=> Text(
+                        "${cartController.promo}",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
+                    Spacer(),
+                    IconButton(onPressed: (){
+                      cartController.removeDiscount(data: 0,text: "Promo Code");
+                    }, icon: Icon(Icons.delete,color: Colors.red,)),
                     ElevatedButton(
                       onPressed: () {
                         Get.toNamed("/coupon_page");
@@ -252,13 +260,15 @@ class _CartPageState extends State<CartPage> {
                           color: Colors.black,
                         ),
                       ),
-                      Text(
-                        "₹ 0",
-                        style: GoogleFonts.poppins(
-                          fontSize: 16,
+                      Obx(
+                        ()=> Text(
+                          "₹ ${cartController.discount}",
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
 
-                          fontWeight: FontWeight.w500,
-                          color: Colors.green,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.green,
+                          ),
                         ),
                       ),
                     ],
@@ -280,7 +290,7 @@ class _CartPageState extends State<CartPage> {
                       ),
                       ),
                       Obx(()=> Text(
-                        "₹ ${cartController.totalPrice + 29}",
+                        "₹ ${cartController.totalPrice + 29 - cartController.discount.value}",
                         style: GoogleFonts.poppins(
                             fontSize: 16,
                             color: Colors.black,

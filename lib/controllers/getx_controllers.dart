@@ -5,6 +5,20 @@ import '../models/product_model.dart';
 class CartController extends GetxController {
   RxList addedProduct = [].obs;
   RxList productQuantity = [].obs;
+  RxInt discount = 0.obs;
+  RxString promo = "Promo Code".obs;
+
+  addDiscount({required int data,required String text})
+  {
+    discount = data.obs;
+    promo = text.obs;
+  }
+
+  removeDiscount({required int data,required String text})
+  {
+    discount = data.obs;
+    promo = text.obs;
+  }
 
   void addQuantity({required ProductDB productDB, required int index}) {
     productQuantity[index]++;
@@ -28,7 +42,7 @@ class CartController extends GetxController {
       int indext = addedProduct.indexOf(element);
       finalTotal += element.price * productQuantity[indext];
     }
-    return finalTotal;
+    return finalTotal -= - discount.value;
   }
 
   addProduct({required ProductDB productDB}) {
